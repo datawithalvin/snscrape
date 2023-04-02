@@ -1470,7 +1470,7 @@ class _TwitterAPIScraper(snscrape.base.Scraper):
 				elif includeConversationThreads and entry['entryId'].startswith('conversationthread-'):  #TODO show more cursor?
 					for item in entry['content']['items']:
 						if item['entryId'].startswith(f'{entry["entryId"]}-tweet-'):
-							tweetId = int(item['entryId'][len(entry['entryId']) + 7:])
+							tweetId = int(item['entryId'].split('-tweet-', 1)[1])
 							yield self._graphql_timeline_tweet_item_result_to_tweet(item['item']['itemContent']['tweet_results']['result'], tweetId = tweetId)
 				elif not entry['entryId'].startswith('cursor-'):
 					_logger.warning(f'Skipping unrecognised entry ID: {entry["entryId"]!r}')
